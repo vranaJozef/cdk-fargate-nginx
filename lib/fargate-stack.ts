@@ -9,6 +9,9 @@ interface FargateStackProps extends cdk.StackProps {
 }
 
 export class FargateStack extends cdk.Stack {
+
+    readonly lb: elbv2.ApplicationLoadBalancer;
+
     constructor(scope: Construct, id: string, props: FargateStackProps) {
         super(scope, id, props);
 
@@ -48,6 +51,7 @@ export class FargateStack extends cdk.Stack {
             vpc: props.vpc,
             internetFacing: true,
         });
+        this.lb = loadBalancer;
 
         // Set listener port to 8080
         const listener = loadBalancer.addListener('alma-listener', {
@@ -68,19 +72,5 @@ export class FargateStack extends cdk.Stack {
         new cdk.CfnOutput(this, 'LoadBalancerDNS', {
             value: loadBalancer.loadBalancerDnsName,
         });
-
-        // Create a CloudFront distribution pointing to the ALB
-        // const distribution = new cloudfront.Distribution(this, 'MyCloudFrontDistribution', {
-        //     defaultBehavior: {
-        //         origin: new origins.LoadBalancerV2Origin(loadBalancer, {
-        //             protocolPolicy: cloudfront.OriginProtocolPolicy.HTTP_ONLY,
-        //         }),
-        //     },
-        // });
-
-        // Output the DNS name of the CloudFront distribution
-        // new cdk.CfnOutput(this, 'CloudFrontURL', {
-        //     value: distribution.distributionDomainName,
-        // });
     }
 }

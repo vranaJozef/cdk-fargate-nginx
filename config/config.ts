@@ -7,10 +7,10 @@ export interface Config {
 
 export function getConfig(): Config {
     return {
-        account_id: "",
-        region: "",
-        vpc_id: "",
-        vpc_name: "",
+        account_id: "386636587776",
+        region: "eu-central-1",
+        vpc_id: "vpc-0d78a8b731a23f55a",
+        vpc_name: "career-sandbox",
     };
 }
 //
